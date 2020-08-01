@@ -5,11 +5,6 @@
 </template>
 
 <style lang="scss">
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xxl: 1200px;
-
 *,
 *::before,
 *::after {
