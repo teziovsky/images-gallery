@@ -12,7 +12,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$breakpoint-sm: 576px;
 .imageCard {
     list-style: none;
     position: relative;
@@ -23,15 +22,19 @@ $breakpoint-sm: 576px;
         object-fit: cover;
         margin: 5px;
         border-radius: 15px;
+        transition: transform 0.3s ease;
 
         &:hover {
-            border: 2px solid #000;
+            position: relative;
+            border: 1px solid #000;
             cursor: pointer;
+            transform: scale(1.2);
+            z-index: 2;
         }
     }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: 576px) {
     .imageCard__img {
         width: 300px;
         height: auto;
