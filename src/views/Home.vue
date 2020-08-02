@@ -1,13 +1,19 @@
 <template>
     <div class="wrapper">
-        <form>
-            <label for="tag">Search tag</label>
-            <input type="text" name="tag" v-model="imageTag" />
-            <input type="submit" value="Search" @click.prevent="search" />
+        <h1 class="title">Search Images!</h1>
+        <form class="form">
+            <div class="field">
+                <input class="form__input" type="text" name="tag" v-model="imageTag" required />
+                <label class="form__label" for="tag">Type tag</label>
+            </div>
+            <button class="form__submit" type="submit" @click.prevent="search">
+                <img src="https://img.icons8.com/material-sharp/24/000000/search.png" />
+            </button>
         </form>
         <div class="loader" v-if="loading"></div>
         <ul class="gallery" v-else>
-            <ImageCard v-for="image in images" :key="image.id" :image="image" />
+            <p v-if="images.length==0">Write something into search bar!</p>
+            <ImageCard v-else v-for="image in images" :key="image.id" :image="image" />
         </ul>
         <div class="loader" v-if="loadMore"></div>
     </div>
@@ -24,7 +30,7 @@ export default {
             loading: false,
             loadMore: false,
             api_key: "df215f4d9f96349638abd85a9fe506ec",
-            imageTag: "cats",
+            imageTag: "",
             images: [],
             pageNumber: 1,
         };
@@ -78,9 +84,6 @@ export default {
     components: {
         ImageCard,
     },
-    beforeMount() {
-        this.search();
-    },
     mounted() {
         this.loadOnScroll();
     },
@@ -99,7 +102,63 @@ export default {
 
 .wrapper {
     margin: 0 auto;
+    padding: 50px;
     max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+}
+
+.field {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    display: flex;
+    position: relative;
+    align-items: flex-end;
+    margin-bottom: 30px;
+
+    &__label {
+        order: -1;
+        padding-left: 5px;
+        transition: all 0.15s ease-in;
+        transform: translateY(30px);
+        pointer-events: none;
+    }
+
+    &__input {
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid #000000;
+        width: 300px;
+        // margin: 10px 0;
+        padding: 10px 35px 10px 10px;
+
+        &:focus + .form__label {
+            transform: translate(-95px, 30px);
+        }
+    }
+
+    &__submit {
+        background: transparent;
+        border: none;
+        margin-left: 5px;
+        font-size: 24px;
+        font-weight: 300;
+        position: absolute;
+        right: 5px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
 
 .loader {
@@ -115,5 +174,11 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+@media (max-width: 576px) {
+    .form__input:focus + .form__label {
+        transform: translateY(-4px);
+    }
 }
 </style>
