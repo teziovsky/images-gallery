@@ -6,6 +6,7 @@
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Recursive:wght@300;400&display=swap");
+@import "@/variables.scss";
 
 *,
 *::before,
@@ -17,5 +18,6 @@
 
 body {
     font-family: "Recursive";
+    background: $secondary-color;
 }
 </style>
