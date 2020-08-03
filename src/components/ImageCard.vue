@@ -7,7 +7,7 @@
                 :href="image.url_o"
                 target="_blank"
                 rel="noopener noreferrer"
-            >FULL SIZE IMAGE</a>
+            >IMAGE FULL SIZE</a>
         </div>
     </li>
 </template>
@@ -36,47 +36,54 @@ export default {
     overflow: hidden;
 
     &__img {
-        height: 100%;
+        height: 200px;
         width: 100%;
+        border: 2px solid transparent;
         object-fit: cover;
+        -o-object-fit: cover;
+        object-position: bottom;
         border-radius: 4px;
         transition: transform 0.3s ease;
     }
 
     &__external {
         position: absolute;
-        border: 2px solid $primary-color;
-        padding: 5px;
+        border: 3px solid $text-color;
+        padding: 7px;
         text-decoration: none;
-        color: $primary-color;
+        color: $text-color;
         font-weight: 500;
         opacity: 0;
-        transition: opacity 0.5s ease-in;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in;
+        transition: visibility 0.3s 0.25s ease-in;
 
         &:hover {
-            box-shadow: 0px 0px 3px 0px $primary-color;
+            box-shadow: 0px 0px 3px 0px $text-color;
         }
     }
 
     &:hover &__external {
         opacity: 1;
+        visibility: visible;
     }
 
     &:hover &__img {
-        filter: blur(5px);
+        filter: blur(2px);
     }
 }
 
 .overlay {
     width: 100%;
     height: 100%;
-    background-color: rgba($color: $secondary-color, $alpha: 0.9);
+    bottom: 0;
+    background-color: rgba($color: $primary-color, $alpha: 0.8);
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    transition: opacity 0.3s ease-in;
+    border: 2px solid rgba($color: $text-color, $alpha: 1);
+    transition: opacity 0.2s ease-in;
     opacity: 0;
 }
 
