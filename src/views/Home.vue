@@ -20,9 +20,7 @@
         <div class="content">
             <div class="loader" v-if="loading"></div>
             <ul class="gallery" v-else>
-                <p class="info" v-if="images.length==0">Write something into search bar!</p>
                 <ImageCard
-                    v-else
                     v-for="image in AllImages"
                     :key="image.id"
                     :image="image"
@@ -66,8 +64,9 @@ export default {
                     this.loading = false;
                 });
             } else {
-                document.querySelector(".info").innerHTML =
-                    "First you have to write something into search bar!";
+                const input = document.querySelector(".form__input");
+                input.placeholder = "First you have to write something.";
+                input.focus();
             }
         },
         fetchImages() {
@@ -146,6 +145,8 @@ export default {
 
 .header {
     width: 100%;
+    padding-bottom: 10px;
+    background-color: $third-color;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -205,7 +206,7 @@ export default {
 
         &:hover,
         &:focus {
-            cursor: pointer;
+            // cursor: pointer;
             outline: none;
         }
     }
@@ -227,7 +228,7 @@ export default {
 }
 
 .info {
-    color: $text-color;
+    color: $primary-color;
 }
 
 .loader {

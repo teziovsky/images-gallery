@@ -59,7 +59,7 @@ export default {
         transition: visibility 0.3s 0.25s ease-in;
 
         &:hover {
-            box-shadow: 0px 0px 3px 0px $text-color;
+            box-shadow: 0px 0px 8px 0px $third-color;
         }
     }
 
@@ -82,7 +82,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid rgba($color: $text-color, $alpha: 1);
+    border: 2px solid $third-color;
     transition: opacity 0.2s ease-in;
     opacity: 0;
 }
