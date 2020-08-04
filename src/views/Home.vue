@@ -1,11 +1,11 @@
 <template>
     <div class="wrapper">
-        <div class="header">
-            <h1 class="title">Search images!</h1>
+        <div class="header" :style="(this.images.length==0) ? 'height: 100vh' : ''">
+            <h1 class="title">Search images</h1>
             <form class="form">
                 <input
                     class="form__input"
-                    placeholder="Type to search in Flickr!"
+                    placeholder="Type to search in Flickr..."
                     type="text"
                     name="tag"
                     autocomplete="off"
@@ -18,7 +18,7 @@
                 </button>
             </form>
         </div>
-        <div class="content">
+        <div class="content" :style="(this.images.length==0) ? 'display: none' : ''">
             <div class="loader" v-if="loading"></div>
             <ul class="gallery" v-else>
                 <ImageCard
@@ -68,6 +68,7 @@ export default {
                 const input = document.querySelector(".form__input");
                 input.placeholder = "First you have to write something.";
                 input.focus();
+                this.images = [];
             }
         },
         fetchImages() {
@@ -146,15 +147,16 @@ export default {
 
 .header {
     width: 100%;
-    padding-bottom: 10px;
+    height: 173px;
+    padding-bottom: 20px;
     background-color: $third-color;
-    // border-bottom: 3px dashed $primary-color;
     background-image: url("../assets/texture.png");
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
+    transition: height 0.5s ease-in-out;
 }
 
 .title {
@@ -182,7 +184,7 @@ export default {
         transition: border 0.15s ease-in;
         text-transform: uppercase;
         color: $text-color;
-        font-weight: 600;
+        font-weight: 300;
 
         &:focus {
             outline: none;
