@@ -8,6 +8,7 @@
                     placeholder="Type to search in Flickr!"
                     type="text"
                     name="tag"
+                    autocomplete="off"
                     v-model.lazy="imageTag"
                     alt="tag input"
                     required
@@ -147,6 +148,8 @@ export default {
     width: 100%;
     padding-bottom: 10px;
     background-color: $third-color;
+    // border-bottom: 3px dashed $primary-color;
+    background-image: url("../assets/texture.png");
     display: flex;
     flex-direction: column;
     align-items: center;
