@@ -8,9 +8,7 @@
 
 > A images search engine which is using axios  to get data from Flickr API
 
-### 🏠 [Homepage](https://github.com/teziovsky/Images-gallery)
-
-### ✨ [Demo](https://teziovsky.github.io/Images-gallery/)
+### ✨ [Demo](https://teziovsky.github.io/images-gallery/)
 
 ## Install
 
@@ -21,7 +19,6 @@ npm install
 ## Usage
 
 ```sh
-cd images-gallery
 npm run serve
 ```
 
