@@ -1,13 +1,13 @@
 <template>
     <li class="imageCard">
-        <img class="imageCard__img" :src="image.url_n" :alt="image.title" />
-        <div class="overlay">
-            <a
-                class="imageCard__external"
-                :href="image.url_o"
-                target="_blank"
-                rel="noopener noreferrer"
-            >IMAGE FULL SIZE</a>
+        <img
+            v-img:group="{ src: image.url_o }"
+            class="imageCard__img"
+            :src="image.url_n"
+            :alt="image.title"
+        />
+        <div class="imageCard__desc">
+            <span class="imageCard__title">{{ image.title }}</span>
         </div>
     </li>
 </template>
@@ -20,81 +20,123 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/variables.scss";
-
 .imageCard {
-    width: 200px;
-    height: 200px;
-    border-radius: 2px;
+    height: 40vh;
+    flex-grow: 1;
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 3px;
+    margin: 10px;
     position: relative;
     overflow: hidden;
 
-    &__img {
-        height: 200px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+
+    &:before {
+        content: "";
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.7) 100%
+        );
         width: 100%;
-        border: 2px solid transparent;
-        object-fit: cover;
-        -o-object-fit: cover;
-        object-position: bottom;
-        border-radius: 4px;
-        transition: transform 0.3s ease;
+        height: 50%;
+        opacity: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 2;
+        transition-property: top, opacity;
+        transition-duration: 0.3s;
     }
 
-    &__external {
-        position: absolute;
-        border: 3px solid $text-color;
-        padding: 7px;
-        text-decoration: none;
-        color: $text-color;
-        font-weight: 500;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease-in;
-        transition: visibility 0.3s 0.25s ease-in;
+    &:last-child {
+        flex-grow: 10;
+    }
 
-        &:hover {
-            box-shadow: 0px 0px 8px 0px $third-color;
+    &__img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        -o-object-fit: cover;
+        object-position: center;
+        transform: scale(1.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &:focus,
+    &:hover {
+        cursor: pointer;
+
+        &:before,
+        span {
+            opacity: 1;
+        }
+
+        &:before {
+            top: 50%;
+        }
+
+        span {
+            top: 0;
+        }
+
+        .imageCard__img {
+            transform: scale(1);
+        }
+
+        .imageCard__title {
+            transition-delay: 0.15s;
         }
     }
 
-    &:hover &__external {
-        opacity: 1;
-        visibility: visible;
+    &__desc {
+        padding: 20px;
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 3;
     }
 
-    &:hover &__img {
-        filter: blur(2px);
+    &__title {
+        font-size: 20px;
+        display: block;
+        opacity: 0;
+        position: relative;
+        top: 100px;
+        transition-property: top, opacity;
+        transition-duration: 0.3s;
+        transition-delay: 0s;
     }
 }
 
-.overlay {
-    width: 100%;
-    height: 100%;
-    bottom: 0;
-    background-color: rgba($color: $primary-color, $alpha: 0.8);
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid $third-color;
-    transition: opacity 0.2s ease-in;
-    opacity: 0;
+// Portrait
+
+@media (max-aspect-ratio: 1/1) {
+    .imageCard {
+        height: 30vh;
+    }
 }
 
-.imageCard:hover > .overlay {
-    opacity: 1;
+// Short screens
+
+@media (max-height: 480px) {
+    .imageCard {
+        height: 80vh;
+    }
 }
 
-@media (max-width: 576px) {
-    .imageCard__img {
-        width: 300px;
+// Smaller screens in portrait
+
+@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+    .imageCard {
         height: auto;
+        width: 100%;
+
+        &__img {
+            width: 100%;
+            max-height: 75vh;
+            min-width: 0;
+        }
     }
 }
 </style>

@@ -1,41 +1,36 @@
 <template>
     <div class="wrapper">
-        <div class="header" :style="(this.images.length==0) ? 'height: 100vh' : ''">
-            <h1 class="title">Search images</h1>
-            <form class="form">
-                <input
-                    class="form__input"
-                    placeholder="Type to search in Flickr..."
-                    type="text"
-                    name="tag"
-                    autocomplete="off"
-                    v-model.lazy="imageTag"
-                    alt="tag input"
-                    required
-                />
-                <button class="form__submit" type="submit" @click.prevent="search">
-                    <img class="form__icon" :src="require('../assets/search.svg')" alt="search" />
-                </button>
-            </form>
-        </div>
-        <div class="content" :style="(this.images.length==0) ? 'display: none' : ''">
-            <div class="loader" v-if="loading"></div>
-            <ul class="gallery" v-else>
-                <ImageCard
-                    v-for="image in AllImages"
-                    :key="image.id"
-                    :image="image"
-                    @click="viewDetails"
-                />
-            </ul>
+        <input
+            class="searchBar"
+            placeholder="Type to search in Flickr..."
+            type="text"
+            name="searchbar"
+            v-model.lazy="imageTag"
+            @change="search"
+            @keyup.enter="search"
+        />
+        <ul class="gallery">
+            <div class="loader centered" v-show="loading"></div>
+            <transition name="fade" mode="out-in" appear>
+                <p class="info" v-show="!images.length">
+                    Find your dream picture...
+                </p>
+            </transition>
+            <ImageCard
+                v-for="image in AllImages"
+                :key="image.id"
+                :image="image"
+            />
+            <span class="break"></span>
             <div class="loader" v-if="loadMore"></div>
-        </div>
+        </ul>
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import ImageCard from "../components/ImageCard";
+import { api_key } from "../config";
 
 export default {
     name: "Home",
@@ -43,7 +38,6 @@ export default {
         return {
             loading: false,
             loadMore: false,
-            api_key: "df215f4d9f96349638abd85a9fe506ec",
             imageTag: "",
             images: [],
             pageNumber: 1,
@@ -59,15 +53,13 @@ export default {
     methods: {
         search() {
             if (this.imageTag != "") {
-                this.loading = true;
+                this.images.length === 0 ? (this.loading = true) : "";
                 this.fetchImages().then((response) => {
-                    this.images = response.data.photos.photo;
                     this.loading = false;
+                    this.images = response.data.photos.photo;
                 });
             } else {
-                const input = document.querySelector(".form__input");
-                input.placeholder = "First you have to write something.";
-                input.focus();
+                document.querySelector(".searchBar").focus();
                 this.images = [];
             }
         },
@@ -77,7 +69,7 @@ export default {
                 url: "https://api.flickr.com/services/rest",
                 params: {
                     method: "flickr.photos.search",
-                    api_key: this.api_key,
+                    api_key: api_key,
                     tags: this.imageTag,
                     extras: "url_n, url_o, title",
                     page: this.pageNumber,
@@ -104,29 +96,36 @@ export default {
                 }
             };
         },
-        viewDetails(e) {
-            console.log(e);
-        },
     },
     components: {
         ImageCard,
     },
     mounted() {
         this.loadOnScroll();
+        document.querySelector(".searchBar").focus();
     },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/variables.scss";
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
     }
-    55% {
+    25% {
+        transform: rotate(90deg);
+        border-top-color: rgba($color: $white-color, $alpha: 1);
+        border-bottom-color: rgba($color: $white-color, $alpha: 1);
+        border-width: 10px;
+    }
+    50% {
         transform: rotate(180deg);
-        border-color: rgba($color: $primary-color, $alpha: 1);
+    }
+    75% {
+        transform: rotate(270deg);
+        border-left-color: rgba($color: $white-color, $alpha: 1);
+        border-right-color: rgba($color: $white-color, $alpha: 1);
+        border-width: 20px;
     }
     100% {
         transform: rotate(360deg);
@@ -135,135 +134,78 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.1s;
+    transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
 }
 
 .wrapper {
-    margin: 0 auto;
-}
-
-.header {
+    max-width: 1280px;
     width: 100%;
-    height: 173px;
-    padding-bottom: 20px;
-    background-color: $third-color;
-    background-image: url("../assets/texture.png");
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin: 0 auto;
     position: relative;
-    transition: height 0.5s ease-in-out;
 }
 
-.title {
-    margin-top: 25px;
-    color: $text-color;
-    font-weight: 400;
-    text-align: center;
-    text-shadow: 0px 1px 1px $primary-color;
-}
+.searchBar {
+    background: url("../assets/search.svg")
+        rgba($color: $white-color, $alpha: 0.8) no-repeat scroll 15px 12px;
+    border: none;
+    border-radius: 25px;
+    display: block;
+    height: 50px;
+    width: 90%;
+    max-width: 500px;
+    padding: 10px 10px 10px 55px;
+    margin: 25px auto;
+    color: $font-color;
 
-.form {
-    display: flex;
-    align-items: center;
-    position: relative;
-    width: 600px;
-    margin: 15px 0 15px;
-
-    &__input {
-        background-color: $primary-color;
-        border: 2px solid transparent;
-        border-radius: 0.4rem;
-        width: 100%;
-        height: 60px;
-        padding: 10px 55px 10px 20px;
-        transition: border 0.15s ease-in;
-        text-transform: uppercase;
-        color: $text-color;
-        font-weight: 300;
-
-        &:focus {
-            outline: none;
-            border: 2px solid $text-color;
-        }
-
-        &::placeholder {
-            color: $text-color;
-        }
-
-        &:focus::placeholder {
-            color: $text-color;
-        }
+    &:focus,
+    &:hover {
+        outline: none;
+        box-shadow: 0px 3px 5px rgba($color: #000000, $alpha: 0.4);
+        transition: box-shadow 0.15s ease-in;
     }
 
-    &__submit {
-        background-color: transparent;
-        width: 39px;
-        height: 39px;
-        border: none;
-        font-size: 24px;
-        position: absolute;
-        right: 10px;
-
-        &:hover,
-        &:focus {
-            // cursor: pointer;
-            outline: none;
-        }
+    &::placeholder {
+        color: $placeholder-color;
     }
 
-    &__icon {
-        margin-top: 7px;
-        padding-left: 7px;
-        border-left: 1px solid $text-color;
+    &:focus::placeholder {
+        color: $placeholder-color;
     }
-}
-
-.content {
-    max-width: 1300px;
-    margin: 20px auto 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.info {
-    color: $primary-color;
 }
 
 .loader {
-    border: 5px solid $text-color;
-    border-top: 5px solid $primary-color;
-    border-bottom: 5px solid $primary-color;
+    border: 5px solid $background-color;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1.5s ease-in-out infinite;
+    width: 80px;
+    height: 80px;
+    margin: 15px auto;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.break {
+    height: 0;
+    flex-basis: 100%;
 }
 
 .gallery {
+    max-width: 90%;
+    min-height: 70vh;
+    margin: 0 auto;
+    padding: 10px;
+    background: rgba($color: #ffffff, $alpha: 0.3);
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-    .form {
-        width: 100%;
-        padding: 0 20px;
-
-        &__input {
-        }
-
-        &__submit {
-            right: 30px;
-        }
-    }
+.info {
+    font-size: 24px;
+    color: $white-color;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>
