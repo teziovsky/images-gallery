@@ -63,7 +63,7 @@ export default {
         url: "https://api.flickr.com/services/rest",
         params: {
           method: "flickr.photos.search",
-          api_key: api_key,
+          api_key: "7d9a9ad0f2d2f7f4db0257b63cbd3e93",
           tags: this.imageTag,
           extras: "url_n, url_o, title",
           page: this.pageNumber,
