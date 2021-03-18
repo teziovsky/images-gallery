@@ -24,7 +24,6 @@
 <script>
 import axios from "axios";
 import ImageCard from "../components/ImageCard";
-import { api_key } from "../config";
 
 export default {
   name: "Home",
