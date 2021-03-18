@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and deploy to gh-pages
 on:
   push:
     branches:
@@ -18,4 +18,7 @@ jobs:
           npm run build
 
       - name: Deploy 🚀
-        run: npm run deploy
+        run: |
+          git config --global user.email "teziovsky@gmail.com"
+          git config --global user.name "teziovsky"
+          npm run deploy
