@@ -22,51 +22,49 @@
 </template>
 
 <script>
-import axios from "axios";
-import ImageCard from "../components/ImageCard";
+import axios from 'axios';
+import ImageCard from '../components/ImageCard';
 
 export default {
-  name: "Home",
+  name: 'Home',
   data() {
     return {
       loading: false,
       loadMore: false,
-      imageTag: "",
+      imageTag: '',
       images: [],
       pageNumber: 1,
     };
   },
   computed: {
     AllImages() {
-      return this.images
-        .filter((image) => image.title)
-        .filter((image) => image.url_o);
+      return this.images.filter((image) => image.title).filter((image) => image.url_o);
     },
   },
   methods: {
     search() {
-      if (this.imageTag != "") {
-        this.images.length === 0 ? (this.loading = true) : "";
+      if (this.imageTag != '') {
+        this.images.length === 0 ? (this.loading = true) : '';
         this.fetchImages().then((response) => {
           this.loading = false;
           this.images = response.data.photos.photo;
         });
       } else {
-        document.querySelector(".searchBar").focus();
+        document.querySelector('.searchBar').focus();
         this.images = [];
       }
     },
     fetchImages() {
       return axios({
-        method: "get",
-        url: "https://api.flickr.com/services/rest",
+        method: 'get',
+        url: 'https://api.flickr.com/services/rest',
         params: {
-          method: "flickr.photos.search",
-          api_key: "7d9a9ad0f2d2f7f4db0257b63cbd3e93",
+          method: 'flickr.photos.search',
+          api_key: '7d9a9ad0f2d2f7f4db0257b63cbd3e93',
           tags: this.imageTag,
-          extras: "url_n, url_o, title",
+          extras: 'url_n, url_o, title',
           page: this.pageNumber,
-          format: "json",
+          format: 'json',
           nojsoncallback: 1,
           per_page: 40,
         },
@@ -94,7 +92,7 @@ export default {
   },
   mounted() {
     this.loadOnScroll();
-    document.querySelector(".searchBar").focus();
+    document.querySelector('.searchBar').focus();
   },
 };
 </script>
@@ -140,8 +138,8 @@ export default {
 }
 
 .searchBar {
-  background: url("../assets/search.svg")
-    rgba($color: $white-color, $alpha: 0.8) no-repeat scroll 15px 12px;
+  background: url('../assets/search.svg') rgba($color: $white-color, $alpha: 0.8) no-repeat scroll
+    15px 12px;
   border: none;
   border-radius: 25px;
   display: block;
