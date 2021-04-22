@@ -1,10 +1,10 @@
 <template>
   <li class="imageCard">
     <img
-      v-img:group="{ src: image.url_o }"
-      class="imageCard__img"
-      :src="image.url_n"
-      :alt="image.title"
+        v-img:group="{ src: image.url_o }"
+        :alt="image.title"
+        :src="image.url_n"
+        class="imageCard__img"
     />
     <div class="imageCard__desc">
       <span class="imageCard__title">{{ image.title }}</span>
@@ -21,27 +21,27 @@ export default {
 
 <style lang="scss" scoped>
 .imageCard {
-  height: 40vh;
-  flex-grow: 1;
-  list-style: none;
-  margin: 10px;
   position: relative;
   overflow: hidden;
+  flex-grow: 1;
+  height: 40vh;
+  margin: 10px;
+  list-style: none;
 
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
 
   &:before {
-    content: '';
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
-    width: 100%;
-    height: 50%;
-    opacity: 0;
     position: absolute;
+    z-index: 2;
     top: 100%;
     left: 0;
-    z-index: 2;
-    transition-property: top, opacity;
+    width: 100%;
+    height: 50%;
+    content: '';
     transition-duration: 0.3s;
+    transition-property: top, opacity;
+    opacity: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
   }
 
   &:last-child {
@@ -49,13 +49,13 @@ export default {
   }
 
   &__img {
-    height: 100%;
     width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1.1);
     object-fit: cover;
     -o-object-fit: cover;
     object-position: center;
-    transform: scale(1.1);
-    transition: transform 0.3s ease-in-out;
   }
 
   &:focus,
@@ -85,23 +85,23 @@ export default {
   }
 
   &__desc {
-    padding: 20px;
-    color: #fff;
     position: absolute;
+    z-index: 3;
     bottom: 0;
     left: 0;
-    z-index: 3;
+    padding: 20px;
+    color: #FFFFFF;
   }
 
   &__title {
     font-size: 20px;
-    display: block;
-    opacity: 0;
     position: relative;
     top: 100px;
-    transition-property: top, opacity;
-    transition-duration: 0.3s;
+    display: block;
     transition-delay: 0s;
+    transition-duration: 0.3s;
+    transition-property: top, opacity;
+    opacity: 0;
   }
 }
 
@@ -125,13 +125,13 @@ export default {
 
 @media (max-aspect-ratio: 1/1) and (max-width: 480px) {
   .imageCard {
-    height: auto;
     width: 100%;
+    height: auto;
 
     &__img {
       width: 100%;
-      max-height: 75vh;
       min-width: 0;
+      max-height: 75vh;
     }
   }
 }

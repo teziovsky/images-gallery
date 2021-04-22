@@ -1,22 +1,22 @@
 <template>
   <div class="wrapper">
     <input
-      class="searchBar"
-      placeholder="Type to search in Flickr..."
-      type="text"
-      name="searchbar"
-      v-model.lazy="imageTag"
-      @change="search"
-      @keyup.enter="search"
+        v-model.lazy="imageTag"
+        class="searchBar"
+        name="searchbar"
+        placeholder="Type to search in Flickr..."
+        type="text"
+        @change="search"
+        @keyup.enter="search"
     />
     <ul class="gallery">
-      <div class="loader centered" v-show="loading"></div>
-      <transition name="fade" mode="out-in" appear>
-        <p class="info" v-show="!images.length">Find your dream picture...</p>
+      <div v-show="loading" class="loader centered"></div>
+      <transition appear mode="out-in" name="fade">
+        <p v-show="!images.length" class="info">Find your dream picture...</p>
       </transition>
       <ImageCard v-for="image in AllImages" :key="image.id" :image="image" />
       <span class="break"></span>
-      <div class="loader" v-if="loadMore"></div>
+      <div v-if="loadMore" class="loader"></div>
     </ul>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     search() {
-      if (this.imageTag != '') {
+      if (this.imageTag !== '') {
         this.images.length === 0 ? (this.loading = true) : '';
         this.fetchImages().then((response) => {
           this.loading = false;
@@ -73,8 +73,8 @@ export default {
     loadOnScroll() {
       window.onscroll = () => {
         let bottomOfWindow =
-          Math.round(document.documentElement.scrollTop) + window.innerHeight ==
-          document.documentElement.offsetHeight;
+            Math.round(document.documentElement.scrollTop) + window.innerHeight ===
+            document.documentElement.offsetHeight;
 
         if (bottomOfWindow) {
           this.pageNumber++;
@@ -126,35 +126,36 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
 }
 
 .wrapper {
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
   position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .searchBar {
-  background: url('../assets/search.svg') rgba($color: $white-color, $alpha: 0.8) no-repeat scroll
-    15px 12px;
-  border: none;
-  border-radius: 25px;
   display: block;
-  height: 50px;
   width: 90%;
   max-width: 500px;
-  padding: 10px 10px 10px 55px;
+  height: 50px;
   margin: 25px auto;
+  padding: 10px 10px 10px 55px;
   color: $font-color;
+  border: none;
+  border-radius: 25px;
+  background: url('../assets/search.svg') rgba($color: $white-color, $alpha: 0.8) no-repeat scroll 15px 12px;
 
   &:focus,
   &:hover {
+    transition: box-shadow 0.15s ease-in;
     outline: none;
     box-shadow: 0px 3px 5px rgba($color: #000000, $alpha: 0.4);
-    transition: box-shadow 0.15s ease-in;
   }
 
   &::placeholder {
@@ -167,35 +168,35 @@ export default {
 }
 
 .loader {
-  border: 5px solid $background-color;
-  border-radius: 50%;
   width: 80px;
   height: 80px;
   margin: 15px auto;
   animation: spin 1s ease-in-out infinite;
+  border: 5px solid $background-color;
+  border-radius: 50%;
 }
 
 .break {
-  height: 0;
   flex-basis: 100%;
+  height: 0;
 }
 
 .gallery {
+  display: flex;
+  flex-wrap: wrap;
   max-width: 90%;
   min-height: 70vh;
   margin: 0 auto;
   padding: 10px;
   background: rgba($color: #ffffff, $alpha: 0.3);
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .info {
   font-size: 24px;
-  color: $white-color;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: $white-color;
 }
 </style>
