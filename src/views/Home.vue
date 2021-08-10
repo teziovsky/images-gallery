@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
     <input
-        v-model.lazy="imageTag"
-        class="searchBar"
-        name="searchbar"
-        placeholder="Type to search in Flickr..."
-        type="text"
-        @change="search"
-        @keyup.enter="search"
+      v-model.lazy="imageTag"
+      class="searchBar"
+      name="searchbar"
+      placeholder="Type to search in Flickr..."
+      type="text"
+      @change="search"
+      @keyup.enter="search"
     />
     <ul class="gallery">
       <div v-show="loading" class="loader centered"></div>
@@ -15,7 +15,6 @@
         <p v-show="!images.length" class="info">Find your dream picture...</p>
       </transition>
       <ImageCard v-for="image in AllImages" :key="image.id" :image="image" />
-      <span class="break"></span>
       <div v-if="loadMore" class="loader"></div>
     </ul>
   </div>
@@ -44,10 +43,11 @@ export default {
   methods: {
     search() {
       if (this.imageTag !== '') {
-        this.images.length === 0 ? (this.loading = true) : '';
-        this.fetchImages().then((response) => {
+        if (this.images.length === 0) this.loading = true;
+        this.fetchImages().then(({ data }) => {
+          this.images = data.photos.photo;
+        }).finally(() => {
           this.loading = false;
-          this.images = response.data.photos.photo;
         });
       } else {
         document.querySelector('.searchBar').focus();
@@ -73,14 +73,14 @@ export default {
     loadOnScroll() {
       window.onscroll = () => {
         let bottomOfWindow =
-            Math.round(document.documentElement.scrollTop) + window.innerHeight ===
-            document.documentElement.offsetHeight;
+          Math.round(document.documentElement.scrollTop) + window.innerHeight ===
+          document.documentElement.offsetHeight;
 
         if (bottomOfWindow) {
           this.pageNumber++;
           this.loadMore = true;
-          this.fetchImages().then((response) => {
-            this.images.push(...response.data.photos.photo);
+          this.fetchImages().then(({ data }) => {
+            this.images.push(...data.photos.photo);
             this.loadMore = false;
           });
         }
@@ -104,8 +104,8 @@ export default {
   }
   25% {
     transform: rotate(90deg);
-    border-top-color: rgba($color: $white-color, $alpha: 1);
-    border-bottom-color: rgba($color: $white-color, $alpha: 1);
+    border-top-color: rgba($white-color, 1);
+    border-bottom-color: rgba($white-color, 1);
     border-width: 10px;
   }
   50% {
@@ -113,8 +113,8 @@ export default {
   }
   75% {
     transform: rotate(270deg);
-    border-left-color: rgba($color: $white-color, $alpha: 1);
-    border-right-color: rgba($color: $white-color, $alpha: 1);
+    border-left-color: rgba($white-color, 1);
+    border-right-color: rgba($white-color, 1);
     border-width: 20px;
   }
   100% {
@@ -149,20 +149,16 @@ export default {
   color: $font-color;
   border: none;
   border-radius: 25px;
-  background: url('../assets/search.svg') rgba($color: $white-color, $alpha: 0.8) no-repeat scroll 15px 12px;
+  background: url('../assets/search.svg') rgba($white-color, 0.8) no-repeat scroll 15px 12px;
 
   &:focus,
   &:hover {
     transition: box-shadow 0.15s ease-in;
     outline: none;
-    box-shadow: 0px 3px 5px rgba($color: #000000, $alpha: 0.4);
+    box-shadow: 0 3px 5px rgba(#000000, 0.4);
   }
 
-  &::placeholder {
-    color: $placeholder-color;
-  }
-
-  &:focus::placeholder {
+  ::placeholder {
     color: $placeholder-color;
   }
 }
@@ -174,21 +170,18 @@ export default {
   animation: spin 1s ease-in-out infinite;
   border: 5px solid $background-color;
   border-radius: 50%;
-}
-
-.break {
-  flex-basis: 100%;
-  height: 0;
+  grid-column: 1/4;
 }
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   max-width: 90%;
   min-height: 70vh;
   margin: 0 auto;
   padding: 10px;
-  background: rgba($color: #ffffff, $alpha: 0.3);
+  background: rgba(#ffffff, 0.3);
 }
 
 .info {
