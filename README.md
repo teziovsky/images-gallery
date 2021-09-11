@@ -1,35 +1,29 @@
-<h1 align="center">Welcome to Images Search Engine 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/teziovsky/Images-gallery#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-</p>
+# Hey it's images-gallery! 🤝
 
-> A images search engine which is using axios  to get data from Flickr API
+> A images search engine which is using axios to get data from Flickr API
 
-### ✨ [Demo](https://teziovsky.github.io/images-gallery/)
+## [Demo](https://teziovsky.github.io/images-gallery/)
 
-## Install
+## Run locally
 
-```sh
+Clone the project and go to the project directory
+
+```bash
+git clone https://github.com/teziovsky/images-gallery.git && cd images-gallery
+```
+
+Install dependencies
+
+```bash
 npm install
 ```
 
-## Usage
+Start the server
 
-```sh
+```bash
 npm run serve
 ```
 
-## Author
+## Contact
 
-👤 **Jakub Soboczyński**
-
-* Website: https://www.jakubsoboczynski.pl
-* Github: [@teziovsky](https://github.com/teziovsky)
-* LinkedIn: [@jakubsoboczynski](https://linkedin.com/in/jakubsoboczynski)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
+If you have any suggestions, please [send me an email here](mailto:kontakt@jakubsoboczynski.pl) 🔥
