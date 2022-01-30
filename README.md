@@ -1,6 +1,6 @@
 # Hey it's images-gallery! 🤝
 
-> A images search engine which is using axios to get data from Flickr API
+> Image Finder written in Vue.js. Fetch images based on the search term from the Flickr API.
 
 ## [Demo](https://teziovsky.github.io/images-gallery/)
 
