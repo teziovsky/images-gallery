@@ -1,6 +1,26 @@
 {
   "name": "images-gallery",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Image Finder written in Vue.js. Fetch images based on the search term from the Flickr API.",
+  "homepage": "https://teziovsky.github.io/images-gallery/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:teziovsky/images-gallery.git"
+  },
+  "engines": {
+    "node": ">=v12.0.0",
+    "npm": ">=v6.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/teziovsky/images-gallery/issues",
+    "email": "teziovsky@gmail.com"
+  },
+  "license": "MIT License",
+  "author": {
+    "name": "Jakub Soboczyński",
+    "email": "jakub.soboczynski@icloud.com",
+    "url": "https://www.jakubsoboczynski.pl"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
