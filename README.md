@@ -1,29 +1,44 @@
-# Hey it's images-gallery! 🤝
+# Hey it's images-gallery! 🖖🏼
+
+![GitHub package.json version](https://img.shields.io/github/package-json/v/teziovsky/images-gallery) [![GitHub](https://img.shields.io/github/license/teziovsky/images-gallery)](https://choosealicense.com/licenses/mit/) [![Twitter Follow](https://img.shields.io/twitter/follow/teziovsky?style=social)](https://www.twitter.com/teziovsky)
 
 > Image Finder written in Vue.js. Fetch images based on the search term from the Flickr API.
 
-## [Demo](https://teziovsky.github.io/images-gallery/)
+## Demo 👀
+#### [🏠 Link to demo here!](https://teziovsky.github.io/images-gallery/)
 
-## Run locally
+## Get started 🏁
 
 Clone the project and go to the project directory
 
 ```bash
-git clone https://github.com/teziovsky/images-gallery.git && cd images-gallery
+  git clone git@github.com:teziovsky/images-gallery.git && cd images-gallery
 ```
 
 Install dependencies
 
 ```bash
-npm install
+  npm install
 ```
 
-Start the server
+Start the application!
 
 ```bash
-npm run serve
+  npm run start
 ```
 
-## Contact
+## Author 🙎🏼‍
 
-If you have any suggestions, please [send me an email here](mailto:jakub.soboczynski@icloud.com) 🔥
+#### [@teziovsky](https://www.github.com/teziovsky)
+
+## Contact ☎️
+
+If you have any suggestions, please [email me here](mailto:jakub.soboczynski@icloud.com)! 🔥
+
+## License 🧾
+
+#### [MIT License](https://choosealicense.com/licenses/mit/)
+
+---
+
+README created with ❤️ by [md-generate](https://www.npmjs.com/package/md-generate)
