@@ -12,7 +12,7 @@
     <ul class="gallery">
       <div v-show="loading" class="loader centered"></div>
       <transition appear mode="out-in" name="fade">
-        <p v-show="!images.length" class="info">Find your dream picture...</p>
+        <p v-show="!images.length" class="info">Discover your ideal image...</p>
       </transition>
       <ImageCard v-for="image in AllImages" :key="image.id" :image="image" />
       <div v-if="loadMore" class="loader"></div>
